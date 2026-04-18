@@ -1,0 +1,31 @@
+# DNA Analysis Tool for Computational Biotechnology
+# This script calculates GC content and translates DNA to Protein
+
+def calculate_gc_content(sequence):
+    """Calculates the percentage of Guanine and Cytosine in a DNA string."""
+    sequence = sequence.upper()
+    gc_count = sequence.count('G') + sequence.count('C')
+    return (gc_count / len(sequence)) * 100
+
+def translate_dna(dna):
+    """Simple translation map for DNA to Protein (First 10 Codons)"""
+    codon_table = {
+        'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
+        'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
+        'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
+        'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
+        'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L'
+    }
+    protein = ""
+    for i in range(0, len(dna) - (len(dna) % 3), 3):
+        codon = dna[i:i+3].upper()
+        protein += codon_table.get(codon, '?')
+    return protein
+
+# Example sequence: A segment of a gene
+test_dna = "ATGCGATCGTAGCTAGCTAGC"
+
+print("--- Biotech Data Analysis ---")
+print(f"DNA Sequence: {test_dna}")
+print(f"GC Content: {calculate_gc_content(test_dna):.2f}%")
+print(f"Protein Translation: {translate_dna(test_dna)}")
